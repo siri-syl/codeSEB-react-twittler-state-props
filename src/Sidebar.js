@@ -6,9 +6,9 @@ const Sidebar = () => {
   return (
     <section className="sidebar">
       {/* TODO : Link 컴포넌트를 작성하고, to 속성을 이용하여 경로(path)를 연결합니다. */}
-      <Link exact to="/" className="far fa-comment-dots"></Link>
-      <Link to="/about" className="far fa-question-circle"></Link>
-      <Link to="/mypage" className="far fa-user"></Link>
+      <Link to="/"><i className="far fa-comment-dots"></i></Link>
+      <Link to="/about"><i className="far fa-question-circle"></i></Link>
+      <Link to="/mypage"><i className="far fa-user"></i></Link>
     </section>
   );
 };
