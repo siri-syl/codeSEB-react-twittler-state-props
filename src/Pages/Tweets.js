@@ -1,5 +1,5 @@
 // TODO : useState를 react로 부터 import 합니다.
-import React, { /* TODO */ } from 'react';
+import React, { useState } from 'react';
 import Footer from '../Footer';
 import Tweet from '../Components/Tweet';
 import './Tweets.css';
@@ -37,8 +37,14 @@ const Tweets = () => {
                   defaultValue="parkhacker"
                   placeholder="your username here.."
                   className="tweetForm__input--username"
+                  onChange={handleChangeUser}
                 ></input>
-                TODO : 트윗을 작성할 수 있는 textarea 엘리먼트를 작성하세요.
+                <textarea
+                  placeholder="your tweet here..."
+                  className="tweetForm__input--message"
+                  onChange={handleChangeMsg}
+                ></textarea>
+                {/* TODO : 트윗을 작성할 수 있는 textarea 엘리먼트를 작성하세요. */}
               </div>
               <div className="tweetForm__count" role="status">
                 <span className="tweetForm__count__text">
@@ -49,6 +55,7 @@ const Tweets = () => {
             </div>
             <div className="tweetForm__submit">
               <div className="tweetForm__submitIcon"></div>
+              <button className="tweetForm__submitButton" onClick={handleButtonClick}>Tweet</button>
               {/* TODO : 작성한 트윗을 전송할 수 있는 button 엘리먼트를 작성하세요. */}
             </div>
           </div>
