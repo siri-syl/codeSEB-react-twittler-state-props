@@ -49,7 +49,7 @@ const Tweets = () => {
               <div className="tweetForm__count" role="status">
                 <span className="tweetForm__count__text">
                   {/* TODO : 트윗 총 개수를 보여줄 수 있는 Counter를 작성하세요. */}
-                  {'total: '}
+                  {'total: ' + dummyTweets.length}
                 </span>
               </div>
             </div>
@@ -64,7 +64,11 @@ const Tweets = () => {
       <div className="tweet__selectUser"></div>
       <ul className="tweets">
         {/* TODO : 하나의 트윗이 아니라, 주어진 트윗 목록(dummyTweets) 갯수에 맞게 보여줘야 합니다. */}
-        <Tweet tweet={dummyTweets[0]} />
+        {dummyTweets.map((tweet) => {
+          return (
+        <Tweet key={tweet.id} tweet={tweet} />
+          )
+          })}
       </ul>
       <Footer />
     </React.Fragment>
