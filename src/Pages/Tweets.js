@@ -6,6 +6,7 @@ import './Tweets.css';
 import dummyTweets from '../static/dummyData';
 
 const Tweets = () => {
+  
   // TODO : 새로 트윗을 작성하고 전송할 수 있게 useState를 적절히 활용하세요.
   const [tweets, setTweets] = useState([...dummyTweets])
   const [userName, setName] = useState("parkhacker");
@@ -38,6 +39,47 @@ const Tweets = () => {
     // TODO : Tweet textarea 엘리먼트에 입력 시 작동하는 함수를 완성하세요.
     setMsg(event.target.value);
   };
+  
+  // TODO-Advanced : 드롭다운 만들기
+  const [choice, setChoice] = useState("");
+
+  const tweetsUserNameList = [];
+  // 타임라인의 트윗들을 토대로 유저리스트를 만듦. 그 중에서도 겹치는 유저는 골라서 하나로 함.
+  for (let i =0; i < tweets.length; i++){
+    tweetsUserNameList.push(tweets[i].username);
+    for (let n=i+1; n < tweets.length; n++){
+      if(tweets[i].username === tweets[n].username){
+        tweetsUserNameList.pop();
+      }
+    }
+  }
+
+  const options = tweetsUserNameList.map((tweetsUserName) => {
+    return <option key={tweetsUserName} value={tweetsUserName}>{tweetsUserName}</option>;
+  });
+
+  const handleSelectOption = (event) => {
+    setChoice(event.target.value);
+  };
+
+  const onRemove = (id) => {
+    // tweet.id 가 매개변수로 작성하지 않는 데이터들만 추출해서 새로운 배열을 만듬
+    // = tweet.id 가 id 인 것을 제거함
+    setTweets(tweets.filter((tweet) => tweet.id !== id));
+  };
+  
+  const filterUserTimeline = tweets.filter((userChoice) => userChoice.username === `${choice}`).map((tweet) => {
+    return (
+      <Tweet key={tweet.id} tweet={tweet} onRemove={onRemove} />
+    )
+  })
+
+  const AllTimeline = tweets.map((tweet) => {
+    return (
+      <Tweet key={tweet.id} tweet={tweet} onRemove={onRemove} />
+    )
+  })
+
 
   return (
     <React.Fragment>
@@ -73,20 +115,25 @@ const Tweets = () => {
             </div>
             <div className="tweetForm__submit">
               <div className="tweetForm__submitIcon"></div>
-              <button className="tweetForm__submitButton" value={{userName, content}} onClick={handleButtonClick}>Tweet</button>
+              <button className="tweetForm__submitButton" onClick={handleButtonClick}>Tweet</button>
               {/* [Clear] TODO : 작성한 트윗을 전송할 수 있는 button 엘리먼트를 작성하세요. */}
             </div>
           </div>
         </div>
       </div>
-      <div className="tweet__selectUser"></div>
+      <div className="tweet__selectUser">
+
+        
+        {/* [Clear] Advenced TODO : select 태그 완성 */}
+        <select onChange={handleSelectOption} value={choice}>
+        <option value=''>--click to filter tweets by username--</option>
+        {options}
+        </select>
+      </div>
       <ul className="tweets">
         {/* [Clear] TODO : 하나의 트윗이 아니라, 주어진 트윗 목록(dummyTweets) 갯수에 맞게 보여줘야 합니다. */}
-        {tweets.map((tweet) => {
-          return (
-        <Tweet key={tweet.id} tweet={tweet} />
-          )
-          })}
+        {/* [Clear] Advanced TODO : 셀렉트 옵션(드롭다운) 선택에 따라 필터링 되게끔 구현 */}
+        {choice !== '' ? filterUserTimeline : AllTimeline}
       </ul>
       <Footer />
     </React.Fragment>
